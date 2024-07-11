@@ -23,7 +23,7 @@ jobs:
             - name: Checkout this repository
               uses: actions/checkout@v4
               with:
-                ref: '.'
+                path: '.'
 
             - name: Checkout target repository
               uses: actions/checkout@v4
