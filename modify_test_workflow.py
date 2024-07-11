@@ -7,9 +7,7 @@ from ruamel.yaml import YAML
 
 def modify_workflow(workflow_file):
     here = Path(__file__).parent.resolve()
-    print(here)
-    workflow_file = (here / ".." / workflow_file).resolve()
-    print(workflow_file)
+    workflow_file = (here / ".." / ".." / workflow_file).resolve()
     with open(workflow_file, "r") as f:
         workflow = f.read()
     yaml = YAML()
