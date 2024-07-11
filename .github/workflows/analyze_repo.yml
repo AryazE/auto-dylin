@@ -15,7 +15,7 @@ on:
                 required: true
 
 jobs:
-    analyze:
+    prepare:
         runs-on: ubuntu-latest
 
         steps:
@@ -59,15 +59,24 @@ jobs:
             
             - name: Modify test workflow
               run: |
-                ls target_repo/.github/workflows
-                realpath target_repo/.github/workflows/${{ inputs.test_workflow }}
                 python auto_dylin/modify_test_workflow.py --workflow_file=target_repo/.github/workflows/${{ inputs.test_workflow }}
             
-            - name: Run test workflow
+            - name: Make workflow executable
               run: |
                 chmod +x target_repo/.github/workflows/${{ inputs.test_workflow }}
-                target_repo/.github/workflows/${{ inputs.test_workflow }}
             
+            - name: Log workflow
+              run: |
+                cat target_repo/.github/workflows/${{ inputs.test_workflow }}
+            
+    run_workflow:
+        uses: ./target_repo/.github/workflows/${{ inputs.test_workflow }}
+        needs: prepare
+    
+    post_process:
+        runs-on: ubuntu-latest
+        needs: run_workflow
+        steps:
             - name: Run post-analysis
               run: |
                 python auto_dylin/post_analysis.py --test_workflow=target_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_STEP_SUMMARY

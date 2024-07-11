@@ -57,6 +57,7 @@ def modify_workflow(workflow_file):
                 + job["steps"][checkout_point:]
             )
 
+    workflow["on"] = {"workflow_call": ""}
     yaml.dump(workflow, workflow_file)
 
 
