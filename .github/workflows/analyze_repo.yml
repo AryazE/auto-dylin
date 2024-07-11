@@ -31,12 +31,6 @@ jobs:
                 ref: ${{ inputs.sha }}
                 path: 'target_repo'
             
-            - name: Install DyLin
-              run: |
-                python -m pip install --upgrade pip
-                pip install -r DyLin/requirements.txt
-                pip install -e ./DyLin
-            
             - name: Checkout this repository
               uses: actions/checkout@v4
               with:
@@ -46,6 +40,12 @@ jobs:
               run: |
                 python -m pip install --upgrade pip
                 pip install -r auto_dylin/requirements.txt
+            
+            - name: Install DyLin
+              run: |
+                python -m pip install --upgrade pip
+                pip install -r auto_dylin/DyLin/requirements.txt
+                pip install -e auto_dylin/DyLin
             
             - name: Modify test workflow
               run: |
