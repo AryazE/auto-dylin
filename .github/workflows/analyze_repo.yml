@@ -81,7 +81,7 @@ jobs:
         steps:
             - name: Run post-analysis
               run: |
-                python auto_dylin/post_analysis.py --test_workflow=target_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_STEP_SUMMARY
+                python ./post_analysis.py --test_workflow=target_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_STEP_SUMMARY
             
             - name: Save cache on failure
               if: always()

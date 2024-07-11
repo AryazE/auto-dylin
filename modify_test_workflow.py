@@ -5,7 +5,7 @@ import fire
 from ruamel.yaml import YAML
 
 
-def modify_workflow(workflow_file):
+def modify_workflow(workflow_file: str, repo: str, ref: str = None):
     here = Path(__file__).parent.resolve()
     workflow_file = (here / workflow_file).resolve()
     with open(workflow_file, "r") as f:
@@ -43,6 +43,12 @@ def modify_workflow(workflow_file):
         for step_num, step in enumerate(job["steps"]):
             if "uses" in step and "actions/checkout@" in step["uses"]:
                 checkout_point = step_num + 1
+                if "with" not in step:
+                    step["with"] = {}
+                step["with"]["repository"] = repo
+                if ref is not None:
+                    step["with"]["ref"] = ref
+                step["with"]["path"] = "target_repo"
             elif ("name" in step and "test" in step["name"].lower()) or (
                 "run" in step and "pytest" in step["run"]
             ):
