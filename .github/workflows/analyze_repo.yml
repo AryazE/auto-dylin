@@ -50,7 +50,8 @@ jobs:
             
             - name: Modify test workflow
               run: |
-                python auto_dylin/modify_test_workflow.py --workflow_file=taget_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_ENV
+                ls
+                python auto_dylin/modify_test_workflow.py --workflow_file=taget_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Run test workflow
               run: taget_repo/.github/workflows/${{ inputs.test_workflow }}
@@ -59,5 +60,11 @@ jobs:
               run: |
                 python auto_dylin/post_analysis.py --test_workflow=taget_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_STEP_SUMMARY
             
-        
-        
+            - name: Save cache on failure
+              if: always()
+              uses: actions/cache@v4
+              with:
+                path: ~/.cache/pip
+                key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+                restore-keys: |
+                    ${{ runner.os }}-pip-
