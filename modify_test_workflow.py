@@ -43,7 +43,9 @@ def modify_workflow(workflow_file):
         for step_num, step in enumerate(job["steps"]):
             if "actions/checkout@" in step["uses"]:
                 checkout_point = step_num + 1
-            elif "test" in step["name"].lower() or "pytest" in step["run"]:
+            elif "test" in step["name"].lower() or (
+                "run" in step and "pytest" in step["run"]
+            ):
                 if "env" in step:
                     step["env"].update(dynapyt_envs)
                 else:
