@@ -64,7 +64,9 @@ jobs:
                 python auto_dylin/modify_test_workflow.py --workflow_file=target_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Run test workflow
-              run: target_repo/.github/workflows/${{ inputs.test_workflow }}
+              run: |
+                git update-index --chmod=+x ./.github/scripts/backend_decrypt.sh
+                target_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Run post-analysis
               run: |
