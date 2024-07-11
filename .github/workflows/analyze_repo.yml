@@ -58,8 +58,8 @@ jobs:
             
             - name: Modify test workflow
               run: |
-                ls target_repo
                 ls target_repo/.github/workflows
+                realpath target_repo/.github/workflows/${{ inputs.test_workflow }}
                 python auto_dylin/modify_test_workflow.py --workflow_file=taget_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Run test workflow
