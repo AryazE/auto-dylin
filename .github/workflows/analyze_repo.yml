@@ -19,12 +19,6 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Install Python
-              uses: actions/setup-python@v5
-              with:
-                python-version: '3.10'
-                cache: 'pip'
-            
             - name: Checkout target repository
               uses: actions/checkout@v4
               with:
@@ -36,6 +30,12 @@ jobs:
               uses: actions/checkout@v4
               with:
                 path: 'auto_dylin'
+            
+            - name: Install Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.10'
+                cache: 'pip'
             
             - name: Install dependencies
               run: |
