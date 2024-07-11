@@ -11,12 +11,15 @@ def modify_workflow(workflow_file):
     yaml = YAML()
     workflow = yaml.load(workflow)
 
-    uid = str(uuid.uuid4())
+    uid = "1234-abcd"
     temp_dir = tempfile.gettempdir()
     coverage_dir = Path(temp_dir) / f"dynapyt_coverage-{uid}"
     coverage_dir.mkdir(parents=True, exist_ok=True)
     with open("analyses.txt", "r") as f:
-        analyses = f.read().strip().split("\n")
+        analyses = [
+            f"{ana};output_dir={temp_dir}/dynaput_output-{uid}"
+            for ana in f.read().strip().split("\n")
+        ]
     additional_steps = [
         {
             "name": "Instrumentation",
@@ -51,7 +54,6 @@ def modify_workflow(workflow_file):
             )
 
     yaml.dump(workflow, Path(workflow_file))
-    return f"uid={uid}"
 
 
 if __name__ == "__main__":

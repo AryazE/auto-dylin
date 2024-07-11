@@ -4,7 +4,8 @@ from pathlib import Path
 from dynapyt.post_run import post_run
 
 
-def post_analysis(uid: str, test_workflow: str):
+def post_analysis(test_workflow: str):
+    uid = "1234-abcd"
     temp_dir = tempfile.gettempdir()
     coverage_dir = Path(temp_dir) / f"dynapyt_coverage-{uid}"
     output_dir = f"dynapyt_output-{uid}"
