@@ -6,7 +6,8 @@ from ruamel.yaml import YAML
 
 
 def modify_workflow(workflow_file):
-    with open(workflow_file, "r") as f:
+    here = Path(__file__).parent.resolve()
+    with open((here / ".." / workflow_file).resolve(), "r") as f:
         workflow = f.read()
     yaml = YAML()
     workflow = yaml.load(workflow)
@@ -15,7 +16,7 @@ def modify_workflow(workflow_file):
     temp_dir = tempfile.gettempdir()
     coverage_dir = Path(temp_dir) / f"dynapyt_coverage-{uid}"
     coverage_dir.mkdir(parents=True, exist_ok=True)
-    with open("analyses.txt", "r") as f:
+    with open(here / "analyses.txt", "r") as f:
         analyses = [
             f"{ana};output_dir={temp_dir}/dynaput_output-{uid}"
             for ana in f.read().strip().split("\n")
@@ -53,7 +54,7 @@ def modify_workflow(workflow_file):
                 + job["steps"][checkout_point:]
             )
 
-    yaml.dump(workflow, Path(workflow_file))
+    yaml.dump(workflow, (here / ".." / workflow_file).resolve())
 
 
 if __name__ == "__main__":
