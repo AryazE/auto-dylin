@@ -29,8 +29,6 @@ jobs:
             
             - name: Checkout this repository
               uses: actions/checkout@v4
-              with:
-                path: 'auto_dylin'
             
             - name: Install Python
               uses: actions/setup-python@v5
@@ -49,28 +47,29 @@ jobs:
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
-                pip install -r auto_dylin/requirements.txt
+                pip install -r ./requirements.txt
             
             - name: Install DyLin
               run: |
                 python -m pip install --upgrade pip
-                pip install -r auto_dylin/DyLin/requirements.txt
-                pip install -e auto_dylin/DyLin
+                pip install -r ./DyLin/requirements.txt
+                pip install -e ./DyLin
             
             - name: Modify test workflow
               run: |
-                python auto_dylin/modify_test_workflow.py --workflow_file=target_repo/.github/workflows/${{ inputs.test_workflow }}
+                python ./modify_test_workflow.py --workflow_file=target_repo/.github/workflows/${{ inputs.test_workflow }}
             
-            - name: Make workflow executable
-              run: |
-                chmod +x target_repo/.github/workflows/${{ inputs.test_workflow }}
+            # - name: Make workflow executable
+            #   run: |
+            #     chmod +x target_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Log workflow
               run: |
                 cat target_repo/.github/workflows/${{ inputs.test_workflow }}
+                cp target_repo/.github/workflows/${{ inputs.test_workflow }} ./.github/workflows/test.yml
             
     run_workflow:
-        uses: ./target_repo/.github/workflows/${{ inputs.test_workflow }}
+        uses: ./.github/workflows/test.yml
         needs: prepare
     
     post_process:
