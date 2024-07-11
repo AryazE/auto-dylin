@@ -41,9 +41,9 @@ def modify_workflow(workflow_file):
     for _, job in workflow["jobs"].items():
         checkout_point = 0
         for step_num, step in enumerate(job["steps"]):
-            if "actions/checkout@" in step["uses"]:
+            if "uses" in step and "actions/checkout@" in step["uses"]:
                 checkout_point = step_num + 1
-            elif "test" in step["name"].lower() or (
+            elif ("name" in step and "test" in step["name"].lower()) or (
                 "run" in step and "pytest" in step["run"]
             ):
                 if "env" in step:
