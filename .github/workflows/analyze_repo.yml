@@ -65,7 +65,7 @@ jobs:
             
             - name: Run test workflow
               run: |
-                git update-index --chmod=+x ./.github/workflows/${{ inputs.test_workflow }}
+                chmod +x target_repo/.github/workflows/${{ inputs.test_workflow }}
                 target_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Run post-analysis
