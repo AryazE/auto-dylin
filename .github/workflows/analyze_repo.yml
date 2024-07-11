@@ -60,7 +60,7 @@ jobs:
             
             - name: Modify test workflow
               run: |
-                python ./modify_test_workflow.py --workflow_file=target_repo/.github/workflows/${{ inputs.test_workflow }}
+                python ./modify_test_workflow.py --workflow_file=target_repo/.github/workflows/${{ inputs.test_workflow }} --repository=${{ inputs.repository }} --ref=${{ inputs.sha }}
             
             # - name: Make workflow executable
             #   run: |
