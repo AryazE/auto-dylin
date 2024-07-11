@@ -36,7 +36,7 @@ jobs:
               with:
                 path: 'auto_dylin'
             
-            - uses: actions/cache@v3
+            - uses: actions/cache@v4
               with:
                 path: ~/.cache/pip
                 key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -56,7 +56,7 @@ jobs:
             
             - name: Modify test workflow
               run: |
-                python auto_dylin/modify_test_workflow.py taget_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_ENV
+                python auto_dylin/modify_test_workflow.py --workflow_file=taget_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_ENV
             
             - name: Run test workflow
               run: taget_repo/.github/workflows/${{ inputs.test_workflow }}

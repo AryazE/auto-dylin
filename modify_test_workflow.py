@@ -7,7 +7,10 @@ from ruamel.yaml import YAML
 
 def modify_workflow(workflow_file):
     here = Path(__file__).parent.resolve()
-    with open((here / ".." / workflow_file).resolve(), "r") as f:
+    print(here)
+    workflow_file = (here / ".." / workflow_file).resolve()
+    print(workflow_file)
+    with open(workflow_file, "r") as f:
         workflow = f.read()
     yaml = YAML()
     workflow = yaml.load(workflow)
@@ -54,7 +57,7 @@ def modify_workflow(workflow_file):
                 + job["steps"][checkout_point:]
             )
 
-    yaml.dump(workflow, (here / ".." / workflow_file).resolve())
+    yaml.dump(workflow, workflow_file)
 
 
 if __name__ == "__main__":
