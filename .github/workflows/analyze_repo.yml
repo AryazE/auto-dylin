@@ -37,6 +37,7 @@ jobs:
                 repository: 'AryazE/DyLin'
                 ref: 'main'
                 path: 'DyLin'
+                token: ${{ secrets.DYLIN_PAT }}
             
             - name: Install DyLin
               run: |
