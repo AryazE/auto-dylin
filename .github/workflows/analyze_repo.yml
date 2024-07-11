@@ -61,14 +61,14 @@ jobs:
               run: |
                 ls target_repo/.github/workflows
                 realpath target_repo/.github/workflows/${{ inputs.test_workflow }}
-                python auto_dylin/modify_test_workflow.py --workflow_file=taget_repo/.github/workflows/${{ inputs.test_workflow }}
+                python auto_dylin/modify_test_workflow.py --workflow_file=target_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Run test workflow
-              run: taget_repo/.github/workflows/${{ inputs.test_workflow }}
+              run: target_repo/.github/workflows/${{ inputs.test_workflow }}
             
             - name: Run post-analysis
               run: |
-                python auto_dylin/post_analysis.py --test_workflow=taget_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_STEP_SUMMARY
+                python auto_dylin/post_analysis.py --test_workflow=target_repo/.github/workflows/${{ inputs.test_workflow }} >> $GITHUB_STEP_SUMMARY
             
             - name: Save cache on failure
               if: always()
