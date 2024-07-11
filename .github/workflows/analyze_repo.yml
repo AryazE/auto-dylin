@@ -71,6 +71,7 @@ jobs:
               if: always()
               uses: actions/cache@v4
               with:
+                save-always: true
                 path: ~/.cache/pip
                 key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
                 restore-keys: |
