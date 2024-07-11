@@ -25,6 +25,7 @@ jobs:
                 repository: ${{ inputs.repository }}
                 ref: ${{ inputs.sha }}
                 path: 'target_repo'
+                sparse-checkout: '.github'
             
             - name: Checkout this repository
               uses: actions/checkout@v4
