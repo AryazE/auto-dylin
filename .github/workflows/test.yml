@@ -1,9 +1,0 @@
-on: workflow_call
-
-jobs:
-    test:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Checkout target repository
-              uses: actions/checkout@v4

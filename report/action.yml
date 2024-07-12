@@ -1,0 +1,11 @@
+name: 'Report'
+description: 'Report DyLin results'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Collect results
+      run: python -m dynapyt.post_run --coverage_dir=$TMPDIR/dynapyt_coverage-1234-abcd --output_dir=$TMPDIR/dynapyt_output-1234-abcd
+    
+    - name: Report results
+      run: cat $TMPDIR/dynapyt_output-1234-abcd/output.json >> $GITHUB_STEP_SUMMARY

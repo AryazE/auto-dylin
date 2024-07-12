@@ -1,0 +1,53 @@
+name: 'Instrument'
+description: 'Instrument code according to DyLin analyses'
+
+inputs:
+  path:
+    description: 'Path to instrument'
+    required: true
+  include-checkers:
+    description: 'Checkers to run'
+    required: false
+    default: 'All'
+  exclude-checkers:
+    description: 'Checkers that will not run'
+    required: false
+    default: 'None'
+  analysis-coverage:
+    description: 'Whether to collect analysis coverage'
+    required: false
+    default: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout DyLin
+      uses: actions/checkout@v4
+        with:
+          repository: 'AryazE/DyLin'
+          path: 'DyLin'
+
+    - name: Install DyLin
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r DyLin/requirements.txt
+        pip install DyLin
+ 
+    - name: Select analyses
+      run: python -m dylin.select_checkers --include="${{ inputs['include-checkers'] }}" --exclude="${{ inputs['exclude-checkers'] }}" > analyses.txt
+    
+    - name: Instrument
+      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=`cat analyses.txt`
+    
+    - name: Set session id
+      run: echo "DYNAPYT_SESSION_ID=1234-abcd" >> $GITHUB_ENV
+    
+    - name: Set coverage path
+      if: ${{ inputs['analysis-coverage'] == true }}
+      run: |
+        echo "DYNAPYT_COVERAGE=$TMPDIR/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}" >> $GITHUB_ENV
+
+    - name: Copy analyses.txt
+      run: cp analyses.txt $TMPDIR/dynapyt_analyses-${{ env.DYNAPYT_SESSION_ID }}.txt
+
+  
