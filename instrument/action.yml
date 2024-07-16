@@ -4,7 +4,8 @@ description: 'Instrument code according to DyLin analyses'
 inputs:
   path:
     description: 'Path to instrument'
-    required: true
+    required: false
+    default: '.'
   include-checkers:
     description: 'Checkers to run'
     required: false
