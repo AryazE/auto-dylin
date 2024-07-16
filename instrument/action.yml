@@ -24,9 +24,9 @@ runs:
   steps:
     - name: Checkout DyLin
       uses: actions/checkout@v4
-        with:
-          repository: 'AryazE/DyLin'
-          path: 'DyLin'
+      with:
+        repository: 'AryazE/DyLin'
+        path: 'DyLin'
 
     - name: Install DyLin
       run: |
