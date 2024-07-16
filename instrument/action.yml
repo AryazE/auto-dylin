@@ -29,29 +29,36 @@ runs:
         path: 'DyLin'
 
     - name: Install DyLin
+      shell: bash
       run: |
         python -m pip install --upgrade pip
         pip install -r ./DyLin/requirements.txt
         pip install ./DyLin
     
     - name: Remove DyLin files
+      shell: bash
       run: rm -rf ./DyLin
  
     - name: Select analyses
+      shell: bash
       run: python -m dylin.select_checkers --include="${{ inputs['include-checkers'] }}" --exclude="${{ inputs['exclude-checkers'] }}" > analyses.txt
     
     - name: Instrument
+      shell: bash
       run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=`cat analyses.txt`
     
     - name: Set session id
+      shell: bash
       run: echo "DYNAPYT_SESSION_ID=1234-abcd" >> $GITHUB_ENV
     
     - name: Set coverage path
       if: ${{ inputs['analysis-coverage'] == true }}
+      shell: bash
       run: |
         echo "DYNAPYT_COVERAGE=$TMPDIR/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}" >> $GITHUB_ENV
 
     - name: Copy analyses.txt
+      shell: bash
       run: cp analyses.txt $TMPDIR/dynapyt_analyses-${{ env.DYNAPYT_SESSION_ID }}.txt
 
   
