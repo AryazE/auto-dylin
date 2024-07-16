@@ -27,6 +27,7 @@ runs:
       with:
         repository: 'AryazE/DyLin'
         path: 'DyLin'
+        ref: 'main'
 
     - name: Install DyLin
       shell: bash
