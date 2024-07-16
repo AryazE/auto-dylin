@@ -52,14 +52,19 @@ runs:
       shell: bash
       run: echo "DYNAPYT_SESSION_ID=1234-abcd" >> $GITHUB_ENV
     
+    - name: Setup temp directory
+      shell: bash
+      run: |
+        python -c "import tempfile; print(f'TMPDIR={tempfile.gettempdir()}')" >> $GITHUB_ENV
+    
     - name: Set coverage path
       if: ${{ inputs['analysis-coverage'] == true }}
       shell: bash
       run: |
-        echo "DYNAPYT_COVERAGE=$TMPDIR/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}" >> $GITHUB_ENV
+        echo "DYNAPYT_COVERAGE=${{ env.TMPDIR }}/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}" >> $GITHUB_ENV
 
     - name: Copy analyses.txt
       shell: bash
-      run: cp analyses.txt $TMPDIR/dynapyt_analyses-${{ env.DYNAPYT_SESSION_ID }}.txt
+      run: cp analyses.txt ${{ env.TMPDIR }}/dynapyt_analyses-${{ env.DYNAPYT_SESSION_ID }}.txt
 
   
