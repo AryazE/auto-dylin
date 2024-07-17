@@ -58,7 +58,7 @@ runs:
         python -c "import tempfile; print(f'TMPDIR={tempfile.gettempdir()}')" >> $GITHUB_ENV
     
     - name: Set coverage path
-      if: ${{ inputs['analysis-coverage'] == true }}
+      if: ${{ inputs['analysis-coverage'] }}
       shell: bash
       run: |
         echo "DYNAPYT_COVERAGE=${{ env.TMPDIR }}/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}" >> $GITHUB_ENV
