@@ -8,6 +8,10 @@ runs:
       shell: bash
       run: |
         python -c "import tempfile; print(f'TMPDIR={tempfile.gettempdir()}')" >> $GITHUB_ENV
+    
+    - name: Log
+      shell: bash
+      run: ls ${{ env.TMPDIR }}/dynapyt_coverage-1234-abcd
 
     - name: Collect results
       shell: bash
