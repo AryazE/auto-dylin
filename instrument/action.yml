@@ -39,23 +39,23 @@ runs:
     - name: Remove DyLin files
       shell: bash
       run: rm -rf ./DyLin
- 
-    - name: Select analyses
-      shell: bash
-      run: python -m dylin.select_checkers --include="${{ inputs['include-checkers'] }}" --exclude="${{ inputs['exclude-checkers'] }}" > analyses.txt
-    
-    - name: Instrument
-      shell: bash
-      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=analyses.txt
     
     - name: Set session id
       shell: bash
       run: echo "DYNAPYT_SESSION_ID=1234-abcd" >> $GITHUB_ENV
-    
+
     - name: Setup temp directory
       shell: bash
       run: |
         python -c "import tempfile; print(f'TMPDIR={tempfile.gettempdir()}')" >> $GITHUB_ENV
+ 
+    - name: Select analyses
+      shell: bash
+      run: python -m dylin.select_checkers --include="${{ inputs['include-checkers'] }}" --exclude="${{ inputs['exclude-checkers'] }}" --output_dir=${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }} > analyses.txt
+    
+    - name: Instrument
+      shell: bash
+      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=analyses.txt
     
     - name: Set coverage path
       if: ${{ inputs['analysis-coverage'] }}

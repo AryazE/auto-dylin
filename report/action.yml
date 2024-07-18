@@ -4,19 +4,14 @@ description: 'Report DyLin results'
 runs:
   using: 'composite'
   steps:
-    - name: Setup temp directory
-      shell: bash
-      run: |
-        python -c "import tempfile; print(f'TMPDIR={tempfile.gettempdir()}')" >> $GITHUB_ENV
-    
     - name: Log
       shell: bash
-      run: ls ${{ env.TMPDIR }}/dynapyt_coverage-1234-abcd
+      run: ls ${{ env.TMPDIR }}/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}
 
     - name: Collect results
       shell: bash
-      run: python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}/dynapyt_coverage-1234-abcd --output_dir=${{ env.TMPDIR }}/dynapyt_output-1234-abcd
+      run: python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }} --output_dir=${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
     
     - name: Report results
       shell: bash
-      run: cat ${{ env.TMPDIR }}/dynapyt_output-1234-abcd/output.json >> $GITHUB_STEP_SUMMARY
+      run: cat ${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}/output.json >> $GITHUB_STEP_SUMMARY
