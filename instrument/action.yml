@@ -46,7 +46,7 @@ runs:
     
     - name: Instrument
       shell: bash
-      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=`cat analyses.txt`
+      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=analyses.txt
     
     - name: Set session id
       shell: bash
