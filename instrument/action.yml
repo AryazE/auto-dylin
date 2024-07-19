@@ -55,7 +55,7 @@ runs:
     
     - name: Instrument
       shell: bash
-      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=analyses.txt
+      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis='analyses.txt'
     
     - name: Set coverage path
       if: ${{ inputs['analysis-coverage'] }}
