@@ -4,10 +4,6 @@ description: 'Report DyLin results'
 runs:
   using: 'composite'
   steps:
-    - name: Log
-      shell: bash
-      run: ls ${{ env.TMPDIR }}/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}
-
     - name: Collect results
       shell: bash
       run: python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }} --output_dir=${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
