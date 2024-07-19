@@ -59,7 +59,7 @@ runs:
     
     - name: Instrument
       shell: bash
-      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysis=${{ env.TMPDIR }}/dynapyt_analyses-${{ env.DYNAPYT_SESSION_ID }}.txt
+      run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysisFile=${{ env.TMPDIR }}/dynapyt_analyses-${{ env.DYNAPYT_SESSION_ID }}.txt
     
     - name: Set coverage path
       if: ${{ inputs['analysis-coverage'] }}
