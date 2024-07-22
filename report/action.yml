@@ -6,8 +6,8 @@ runs:
   steps:
     - name: Collect results
       shell: bash
-      run: python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}/dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }} --output_dir=${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
+      run: python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }} --output_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
     
     - name: Report results
       shell: bash
-      run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}/output.json >> $GITHUB_STEP_SUMMARY
+      run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}${{ env.SEP }}output.json >> $GITHUB_STEP_SUMMARY
