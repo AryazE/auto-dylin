@@ -26,7 +26,7 @@ runs:
       shell: bash
       run: |
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          echo "SEP=\" >> $GITHUB_ENV
+          echo "SEP=\\" >> $GITHUB_ENV
         else
           echo "SEP=/" >> $GITHUB_ENV
         fi
