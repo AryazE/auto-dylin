@@ -10,4 +10,4 @@ runs:
     
     - name: Report results
       shell: bash
-      run: cat ${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}/output.json >> $GITHUB_STEP_SUMMARY
+      run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}/dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}/output.json >> $GITHUB_STEP_SUMMARY
