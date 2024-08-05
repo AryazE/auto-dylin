@@ -18,6 +18,8 @@ runs:
         name: report
         path: ./old_findings.txt
         workflow_search: true
+        search_artifacts: true
+        if_no_artifact_found: ignore
     
     - name: Report changes
       shell: bash
