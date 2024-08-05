@@ -12,6 +12,18 @@ runs:
       shell: bash
       run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}${{ env.SEP }}output.json >> ./findings.txt
     
+    - name: Download old results
+      uses: actions/download-artifact@v4
+      with:
+        name: report
+        path: ./old_findings.txt
+    
+    - name: Report changes
+      shell: bash
+      run: |
+        echo "## Changes in Findings\n" >> $GITHUB_STEP_SUMMARY
+        diff ./old_findings.txt ./findings.txt >> $GITHUB_STEP_SUMMARY
+    
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
@@ -20,4 +32,6 @@ runs:
     
     - name: Report results to summary
       shell: bash
-      run: cat ./findings.txt >> $GITHUB_STEP_SUMMARY
+      run: |
+        echo "## Latest Findings\n" >> $GITHUB_STEP_SUMMARY
+        cat ./findings.txt >> $GITHUB_STEP_SUMMARY
