@@ -8,6 +8,16 @@ runs:
       shell: bash
       run: python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }} --output_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
     
-    - name: Report results
+    - name: Write results to file
       shell: bash
-      run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}${{ env.SEP }}output.json >> $GITHUB_STEP_SUMMARY
+      run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}${{ env.SEP }}output.json >> ./findings.txt
+    
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: report
+        path: ./findings.txt
+    
+    - name: Report results to summary
+      shell: bash
+      run: cat ./findings.txt >> $GITHUB_STEP_SUMMARY
