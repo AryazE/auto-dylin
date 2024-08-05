@@ -13,7 +13,7 @@ runs:
       run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}${{ env.SEP }}output.json >> ./findings.txt
     
     - name: Download old results
-      uses: actions/download-artifact@v4
+      uses: dawidd6/action-download-artifact@v6
       with:
         name: report
         path: ./old_findings.txt
@@ -29,6 +29,7 @@ runs:
       with:
         name: report
         path: ./findings.txt
+        retention-days: 2
     
     - name: Report results to summary
       shell: bash
