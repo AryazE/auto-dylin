@@ -17,6 +17,7 @@ runs:
       with:
         name: report
         path: ./old_findings.txt
+        workflow_search: true
     
     - name: Report changes
       shell: bash
