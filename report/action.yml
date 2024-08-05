@@ -24,8 +24,10 @@ runs:
     - name: Report changes
       shell: bash
       run: |
-        echo "## Changes in Findings\n" >> $GITHUB_STEP_SUMMARY
-        diff ./old_findings.txt ./findings.txt >> $GITHUB_STEP_SUMMARY
+        if [ -f ./old_findings.txt ]; then
+          echo "## Changes in Findings" >> $GITHUB_STEP_SUMMARY
+          diff ./old_findings.txt ./findings.txt >> $GITHUB_STEP_SUMMARY
+        fi
     
     - name: Upload results
       uses: actions/upload-artifact@v4
@@ -37,5 +39,5 @@ runs:
     - name: Report results to summary
       shell: bash
       run: |
-        echo "## Latest Findings\n" >> $GITHUB_STEP_SUMMARY
+        echo "## Latest Findings" >> $GITHUB_STEP_SUMMARY
         cat ./findings.txt >> $GITHUB_STEP_SUMMARY
