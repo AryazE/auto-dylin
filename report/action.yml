@@ -12,14 +12,14 @@ runs:
       shell: bash
       run: python -m dylin.format_output --findings_path=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}${{ env.SEP }}output.json >> ./findings.txt
     
-    - name: Download old results
-      uses: dawidd6/action-download-artifact@v6
-      with:
-        name: report
-        path: ./old_findings.txt
-        workflow_search: true
-        search_artifacts: true
-        if_no_artifact_found: ignore
+    # - name: Download old results
+    #   uses: dawidd6/action-download-artifact@v6
+    #   with:
+    #     name: report
+    #     path: ./old_findings.txt
+    #     workflow_search: true
+    #     search_artifacts: true
+    #     if_no_artifact_found: ignore
     
     - name: Report changes
       shell: bash
