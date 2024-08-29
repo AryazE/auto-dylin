@@ -60,7 +60,10 @@ runs:
  
     - name: Select analyses
       shell: bash
-      run: python -m dylin.select_checkers --include="${{ inputs['include-checkers'] }}" --exclude="${{ inputs['exclude-checkers'] }}" --output_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }} > analyses.txt
+      run: |
+        python -m dylin.select_checkers --include="${{ inputs['include-checkers'] }}" --exclude="${{ inputs['exclude-checkers'] }}" --output_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }} > analyses.txt
+        echo "Selected analyses:\n"
+        cat analyses.txt
     
     - name: Copy analyses.txt
       shell: bash
@@ -71,7 +74,7 @@ runs:
       run: python -m dynapyt.run_instrumentation --directory=${{ inputs.path }} --analysisFile=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_analyses-${{ env.DYNAPYT_SESSION_ID }}.txt
     
     - name: Set coverage path
-      if: ${{ inputs['analysis-coverage'] }}
+      if: ${{ inputs['analysis-coverage'] == true }}
       shell: bash
       run: |
         echo "DYNAPYT_COVERAGE=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }}" >> $GITHUB_ENV
