@@ -6,7 +6,12 @@ runs:
   steps:
     - name: Collect results
       shell: bash
-      run: python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }} --output_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
+      run: |
+        if [[ -z "${{ env.DYNAPYT_COVERAGE }}" ]]; then
+          python -m dynapyt.post_run --coverage_dir="" --output_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
+        else
+          python -m dynapyt.post_run --coverage_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_coverage-${{ env.DYNAPYT_SESSION_ID }} --output_dir=${{ env.TMPDIR }}${{ env.SEP }}dynapyt_output-${{ env.DYNAPYT_SESSION_ID }}
+        fi
     
     - name: Write results to file
       shell: bash
