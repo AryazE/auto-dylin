@@ -37,7 +37,7 @@ runs:
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: report
+        name: report-${{ github.job }}
         path: ./findings.txt
         retention-days: 2
     
